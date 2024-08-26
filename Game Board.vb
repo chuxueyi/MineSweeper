@@ -119,14 +119,14 @@ Random: Dim iRdm = Int(iCR * Rnd())
         i = 0
 Hint:   If aiHint(i) = 0 Then
             Dim iHint = 0
-            If i - 1 >= 0 And i - 1 < iCR Then If aiHint(i - 1) = -1 Then iHint += 1
-            If i + 1 >= 0 And i + 1 < iCR Then If aiHint(i + 1) = -1 Then iHint += 1
-            If i - iC >= 0 And i - iC < iCR Then If aiHint(i - iC) = -1 Then iHint += 1
-            If i + iC >= 0 And i + iC < iCR Then If aiHint(i + iC) = -1 Then iHint += 1
-            If i - iC - 1 >= 0 And i - iC - 1 < iCR Then If aiHint(i - iC - 1) = -1 Then iHint += 1
-            If i + iC - 1 >= 0 And i + iC - 1 < iCR Then If aiHint(i + iC - 1) = -1 Then iHint += 1
-            If i - iC + 1 >= 0 And i - iC + 1 < iCR Then If aiHint(i - iC + 1) = -1 Then iHint += 1
-            If i + iC + 1 >= 0 And i + iC + 1 < iCR Then If aiHint(i + iC + 1) = -1 Then iHint += 1
+            If i - 1 >= 0 And i - 1 < iCR And i Mod iC <> 0 Then If aiHint(i - 1) = -1 Then iHint += 1
+            If i + 1 >= 0 And i + 1 < iCR And i Mod iC <> iC - 1 Then If aiHint(i + 1) = -1 Then iHint += 1
+            If i - iC >= 0 And i - iC < iCR And i \ iC <> 0 Then If aiHint(i - iC) = -1 Then iHint += 1
+            If i + iC >= 0 And i + iC < iCR And i \ iC <> iR - 1 Then If aiHint(i + iC) = -1 Then iHint += 1
+            If i - iC - 1 >= 0 And i - iC - 1 < iCR And i Mod iC <> 0 And i \ iC <> 0 Then If aiHint(i - iC - 1) = -1 Then iHint += 1
+            If i + iC - 1 >= 0 And i + iC - 1 < iCR And i Mod iC <> 0 And i \ iC <> iR - 1 Then If aiHint(i + iC - 1) = -1 Then iHint += 1
+            If i - iC + 1 >= 0 And i - iC + 1 < iCR And i Mod iC <> iC - 1 And i \ iC <> 0 Then If aiHint(i - iC + 1) = -1 Then iHint += 1
+            If i + iC + 1 >= 0 And i + iC + 1 < iCR And i Mod iC <> iC - 1 And i \ iC <> iR - 1 Then If aiHint(i + iC + 1) = -1 Then iHint += 1
             aiHint(i) = iHint
         End If
         i += 1
