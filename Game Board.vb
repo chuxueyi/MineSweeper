@@ -10,7 +10,7 @@ Public Class frmGame
     Dim aiHint(iCR) As Integer
     Dim iClicked As Integer
 
-
+    Dim abClicked() As Boolean
 
 
     Private Sub frmGame_Load() Handles MyBase.Load
@@ -54,8 +54,10 @@ Board:  Me.Controls.Add(New Button With {
                                                                     End If
                                                                     If aiHint(i) <> -1 Then
                                                                         sender.Text = "" & aiHint(i)
+                                                                        abClicked(i) = True
                                                                         iClicked += 1
                                                                         If iClicked = iCR - Form1.iCount Then DirectCast(Me.Controls.Item(0), PictureBox).Image = Image.FromFile("C:\Users\Administrator\source\repos\MineSweeper\Resources\smiley.ico")
+                                                                        ComputerPlay(Form1.iSteps)
                                                                     End If
                                                                 End If
 
@@ -81,7 +83,34 @@ Board:  Me.Controls.Add(New Button With {
 
     End Sub
 
+    Private Sub ComputerPlay(iStp As Integer)
+        Dim i = 0
+Play:   PlayOneStep()
+        i += 1
+        If i < iStp Then GoTo Play
+    End Sub
 
+
+    Private Sub PlayOneStep()
+        'search from 0
+        '100 percent sure move
+        'one move
+        Dim i = 0
+Pivot:  If abClicked(i) = True Then
+            i += 1
+            GoTo Pivot
+        End If
+        If abClicked(i) = False Then
+            'if around eight has one revealed(clicked) as 1
+            'then pass
+
+            'if
+            'then pass
+            '...
+        End If
+        'Dim btnPvt As Button = Me.Controls.Item(i + 1)
+
+    End Sub
 
     Private Sub ShowAns(ii As Integer)
 
@@ -142,6 +171,11 @@ clear1: Me.Controls.Item(i + 1).Text = ""
         i += 1
         If i < iCR Then GoTo clear1
 
+
+        i = 0
+Clear2: abClicked(i) = False
+        i += 1
+        If i < iCR Then GoTo Clear2
 
 
     End Sub
