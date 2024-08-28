@@ -31,13 +31,9 @@ Partial Class frmConfig
         Me.gbxMC = New System.Windows.Forms.GroupBox()
         Me.txtNum = New System.Windows.Forms.TextBox()
         Me.lblNum = New System.Windows.Forms.Label()
-        Me.gbxAI = New System.Windows.Forms.GroupBox()
-        Me.txtSteps = New System.Windows.Forms.TextBox()
-        Me.lblSteps = New System.Windows.Forms.Label()
         Me.btnOK = New System.Windows.Forms.Button()
         Me.gbxBS.SuspendLayout()
         Me.gbxMC.SuspendLayout()
-        Me.gbxAI.SuspendLayout()
         Me.SuspendLayout()
         '
         'gbxBS
@@ -46,7 +42,7 @@ Partial Class frmConfig
         Me.gbxBS.Controls.Add(Me.lblRow)
         Me.gbxBS.Controls.Add(Me.txtCol)
         Me.gbxBS.Controls.Add(Me.lblCol)
-        Me.gbxBS.Location = New System.Drawing.Point(44, 46)
+        Me.gbxBS.Location = New System.Drawing.Point(52, 49)
         Me.gbxBS.Name = "gbxBS"
         Me.gbxBS.Size = New System.Drawing.Size(227, 258)
         Me.gbxBS.TabIndex = 0
@@ -89,7 +85,7 @@ Partial Class frmConfig
         '
         Me.gbxMC.Controls.Add(Me.txtNum)
         Me.gbxMC.Controls.Add(Me.lblNum)
-        Me.gbxMC.Location = New System.Drawing.Point(287, 49)
+        Me.gbxMC.Location = New System.Drawing.Point(288, 49)
         Me.gbxMC.Name = "gbxMC"
         Me.gbxMC.Size = New System.Drawing.Size(227, 258)
         Me.gbxMC.TabIndex = 1
@@ -112,38 +108,11 @@ Partial Class frmConfig
         Me.lblNum.TabIndex = 3
         Me.lblNum.Text = "Number"
         '
-        'gbxAI
-        '
-        Me.gbxAI.Controls.Add(Me.txtSteps)
-        Me.gbxAI.Controls.Add(Me.lblSteps)
-        Me.gbxAI.Location = New System.Drawing.Point(530, 48)
-        Me.gbxAI.Name = "gbxAI"
-        Me.gbxAI.Size = New System.Drawing.Size(227, 258)
-        Me.gbxAI.TabIndex = 2
-        Me.gbxAI.TabStop = False
-        Me.gbxAI.Text = "AI"
-        '
-        'txtSteps
-        '
-        Me.txtSteps.Location = New System.Drawing.Point(105, 119)
-        Me.txtSteps.Name = "txtSteps"
-        Me.txtSteps.Size = New System.Drawing.Size(58, 21)
-        Me.txtSteps.TabIndex = 4
-        '
-        'lblSteps
-        '
-        Me.lblSteps.AutoSize = True
-        Me.lblSteps.Location = New System.Drawing.Point(64, 126)
-        Me.lblSteps.Name = "lblSteps"
-        Me.lblSteps.Size = New System.Drawing.Size(35, 12)
-        Me.lblSteps.TabIndex = 3
-        Me.lblSteps.Text = "Steps"
-        '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(136, 342)
+        Me.btnOK.Location = New System.Drawing.Point(110, 341)
         Me.btnOK.Name = "btnOK"
-        Me.btnOK.Size = New System.Drawing.Size(529, 41)
+        Me.btnOK.Size = New System.Drawing.Size(347, 41)
         Me.btnOK.TabIndex = 3
         Me.btnOK.Text = "OK - Empty means default"
         Me.btnOK.UseVisualStyleBackColor = True
@@ -152,9 +121,8 @@ Partial Class frmConfig
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(567, 450)
         Me.Controls.Add(Me.btnOK)
-        Me.Controls.Add(Me.gbxAI)
         Me.Controls.Add(Me.gbxMC)
         Me.Controls.Add(Me.gbxBS)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -164,15 +132,12 @@ Partial Class frmConfig
         Me.gbxBS.PerformLayout()
         Me.gbxMC.ResumeLayout(False)
         Me.gbxMC.PerformLayout()
-        Me.gbxAI.ResumeLayout(False)
-        Me.gbxAI.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents gbxBS As GroupBox
     Friend WithEvents gbxMC As GroupBox
-    Friend WithEvents gbxAI As GroupBox
     Friend WithEvents btnOK As Button
     Friend WithEvents txtCol As TextBox
     Friend WithEvents lblCol As Label
@@ -180,6 +145,4 @@ Partial Class frmConfig
     Friend WithEvents lblRow As Label
     Friend WithEvents txtNum As TextBox
     Friend WithEvents lblNum As Label
-    Friend WithEvents txtSteps As TextBox
-    Friend WithEvents lblSteps As Label
 End Class

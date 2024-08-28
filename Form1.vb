@@ -2,7 +2,7 @@
     Public iCol As Integer
     Public iRow As Integer
     Public iCount As Integer
-    Public iSteps As Integer
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'load default settings
         iCol = 10
@@ -10,8 +10,7 @@
         mnEasy.Checked = True
         iCount = (iCol * iRow) \ 3
         mnNumSggsted.Checked = True
-        iSteps = 100
-        mnAISggsted.Checked = True
+
     End Sub
     Private Sub mnEasy_Click(sender As Object, e As EventArgs) Handles mnEasy.Click
         iCol = 10
@@ -38,26 +37,14 @@
     End Sub
 
     Private Sub mnNumSggsted_Click(sender As Object, e As EventArgs) Handles mnNumSggsted.Click
-        'suppose it's 50%
-        iCount = (iCol * iRow) \ 2
+        'suppose it's like this
+        iCount = (iCol * iRow) \ 3
         sender.Checked = True
         mnCfgNum.Checked = False
     End Sub
     Private Sub mmnCfgNum_Click(sender As Object, e As EventArgs) Handles mnCfgNum.Click
         sender.checked = True
         mnNumSggsted.Checked = False
-        frmConfig.TopMost = True
-        frmConfig.Show()
-    End Sub
-    Private Sub mnAISggsted_Click(sender As Object, e As EventArgs) Handles mnAISggsted.Click
-        'suppose it's roughly 100
-        iSteps = 100
-        sender.checked = True
-        mnCfgSteps.Checked = False
-    End Sub
-    Private Sub mnCfgSteps_Click(sender As Object, e As EventArgs) Handles mnCfgSteps.Click
-        sender.Checked = True
-        mnAISggsted.Checked = False
         frmConfig.TopMost = True
         frmConfig.Show()
     End Sub

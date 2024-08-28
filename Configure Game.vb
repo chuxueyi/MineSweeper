@@ -39,15 +39,6 @@ Public Class frmConfig
         End If
 
 
-        If txtSteps.Text <> "" Then Form1.iSteps = txtSteps.Text
-
-
-        If txtSteps.Text = "" Then
-            Form1.mnAISggsted.Checked = True
-            Form1.mnCfgSteps.Checked = False
-        End If
-
-
         Me.Close()
 
 

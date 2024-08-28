@@ -31,9 +31,6 @@ Partial Class Form1
         Me.mnNum = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnNumSggsted = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnCfgNum = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnAI = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnAISggsted = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnCfgSteps = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnConfig = New System.Windows.Forms.MenuStrip()
         Me.mnConfig.SuspendLayout()
         Me.SuspendLayout()
@@ -57,19 +54,19 @@ Partial Class Form1
         'mnEasy
         '
         Me.mnEasy.Name = "mnEasy"
-        Me.mnEasy.Size = New System.Drawing.Size(152, 22)
+        Me.mnEasy.Size = New System.Drawing.Size(180, 22)
         Me.mnEasy.Text = "Easy 10*10"
         '
         'mnNotEasy
         '
         Me.mnNotEasy.Name = "mnNotEasy"
-        Me.mnNotEasy.Size = New System.Drawing.Size(152, 22)
+        Me.mnNotEasy.Size = New System.Drawing.Size(180, 22)
         Me.mnNotEasy.Text = "Not Easy 20*20"
         '
         'mnCfgSize
         '
         Me.mnCfgSize.Name = "mnCfgSize"
-        Me.mnCfgSize.Size = New System.Drawing.Size(152, 22)
+        Me.mnCfgSize.Size = New System.Drawing.Size(180, 22)
         Me.mnCfgSize.Text = "Configure"
         '
         'mnNum
@@ -91,28 +88,9 @@ Partial Class Form1
         Me.mnCfgNum.Size = New System.Drawing.Size(233, 22)
         Me.mnCfgNum.Text = "Configure"
         '
-        'mnAI
-        '
-        Me.mnAI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnAISggsted, Me.mnCfgSteps})
-        Me.mnAI.Name = "mnAI"
-        Me.mnAI.Size = New System.Drawing.Size(98, 20)
-        Me.mnAI.Text = "Computer play"
-        '
-        'mnAISggsted
-        '
-        Me.mnAISggsted.Name = "mnAISggsted"
-        Me.mnAISggsted.Size = New System.Drawing.Size(157, 22)
-        Me.mnAISggsted.Text = "Untill guess"
-        '
-        'mnCfgSteps
-        '
-        Me.mnCfgSteps.Name = "mnCfgSteps"
-        Me.mnCfgSteps.Size = New System.Drawing.Size(157, 22)
-        Me.mnCfgSteps.Text = "Configure steps"
-        '
         'mnConfig
         '
-        Me.mnConfig.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnSize, Me.mnNum, Me.mnAI})
+        Me.mnConfig.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnSize, Me.mnNum})
         Me.mnConfig.Location = New System.Drawing.Point(0, 0)
         Me.mnConfig.Name = "mnConfig"
         Me.mnConfig.Size = New System.Drawing.Size(800, 24)
@@ -145,8 +123,5 @@ Partial Class Form1
     Friend WithEvents mnNum As ToolStripMenuItem
     Friend WithEvents mnNumSggsted As ToolStripMenuItem
     Friend WithEvents mnCfgNum As ToolStripMenuItem
-    Friend WithEvents mnAI As ToolStripMenuItem
-    Friend WithEvents mnAISggsted As ToolStripMenuItem
-    Friend WithEvents mnCfgSteps As ToolStripMenuItem
     Friend WithEvents mnConfig As MenuStrip
 End Class

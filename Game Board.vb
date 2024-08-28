@@ -1,5 +1,12 @@
 ﻿
+
 Public Class frmGame
+
+    Dim stPathSmiley = "C:\Users\Administrator\source\repos\MineSweeper\Resources\smiley1.ico"
+    Dim stPathFeelingGood = "C:\Users\Administrator\source\repos\MineSweeper\Resources\smiley.ico"
+    Dim stPathNotHappy = "C:\Users\Administrator\source\repos\MineSweeper\Resources\smiley3.ico"
+    Dim stPathExploded = "C:\Users\Administrator\source\repos\MineSweeper\Resources\mine4.ico"
+    Dim stPathDiscovered = "C:\Users\Administrator\source\repos\MineSweeper\Resources\mine2.ico"
 
 
     Dim iC = Form1.iCol
@@ -8,16 +15,15 @@ Public Class frmGame
 
 
     Dim aiHint(iCR) As Integer
-    Dim iClicked As Integer
 
-    Dim abClicked() As Boolean
+    Dim iDiscovered As Integer
 
 
     Private Sub frmGame_Load() Handles MyBase.Load
 
 
         Me.Controls.Add(New PictureBox With {
-            .Image = Image.FromFile("C:\Users\Administrator\source\repos\MineSweeper\Resources\smiley1.ico"),
+            .Image = Image.FromFile(stPathSmiley),
             .Width = iC * 30 \ 6,
             .Height = iC * 30 \ 6,
             .SizeMode = PictureBoxSizeMode.StretchImage,
@@ -31,7 +37,7 @@ Public Class frmGame
 
         Dim i = 0
 Board:  Me.Controls.Add(New Button With {
-            .Name = "" & i,
+            .Name = i,
             .Text = "",
             .Width = 30,
             .Height = 30,
@@ -42,143 +48,193 @@ Board:  Me.Controls.Add(New Button With {
 
 
 
-        For Each eCtrl In Me.Controls
-            If TypeOf eCtrl Is Button Then
-                AddHandler DirectCast(eCtrl, Button).Click, Sub(sender As Button, e As MouseEventArgs)
-                                                                If e.Button = MouseButtons.Left Then
-                                                                    i = CInt(sender.Name)
-                                                                    If aiHint(i) = -1 Then
-                                                                        sender.Image = Image.FromFile("C:\Users\Administrator\source\repos\MineSweeper\Resources\mine4.ico")
-                                                                        ShowAns(i)
-                                                                        DirectCast(Me.Controls.Item(0), PictureBox).Image = Image.FromFile("C:\Users\Administrator\source\repos\MineSweeper\Resources\smiley3.ico")
-                                                                    End If
-                                                                    If aiHint(i) <> -1 Then
-                                                                        sender.Text = "" & aiHint(i)
-                                                                        abClicked(i) = True
-                                                                        iClicked += 1
-                                                                        If iClicked = iCR - Form1.iCount Then DirectCast(Me.Controls.Item(0), PictureBox).Image = Image.FromFile("C:\Users\Administrator\source\repos\MineSweeper\Resources\smiley.ico")
-                                                                        ComputerPlay(Form1.iSteps)
-                                                                    End If
-                                                                End If
+        For Each ctrl In Me.Controls
+            If TypeOf ctrl Is Button Then
 
 
-                                                                If e.Button = MouseButtons.Right Then
-                                                                    sender.Image = Image.FromFile("C:\Users\Administrator\source\repos\MineSweeper\Resources\mine2.ico")
-                                                                End If
+                AddHandler DirectCast(ctrl, Button).Click, Sub(sender As Button, e As EventArgs)
 
-                                                            End Sub
+
+                                                               Dim pvt = CInt(sender.Name)
+
+                                                               Dim pvtHint = aiHint(pvt)
+
+                                                               If pvtHint = -1 Then
+
+                                                                   sender.Image = Image.FromFile(stPathExploded)
+
+                                                                   DirectCast(Me.Controls.Item(0), PictureBox).Image = Image.FromFile(stPathNotHappy)
+
+                                                                   MsgBox("Swept: " & iDiscovered * 100 \ Form1.iCount & "%")
+
+                                                                   Exit Sub
+
+                                                               End If
+
+                                                               sender.Text = pvtHint
+
+                                                               SweepSurrounding(pvt)
+
+
+                                                               If iDiscovered = Form1.iCount Then DirectCast(Me.Controls.Item(0), PictureBox).Image = Image.FromFile(stPathFeelingGood)
+
+
+
+                                                           End Sub
+
+
+
             End If
+
+
         Next
 
 
         AddHandler Me.Controls.Item(0).Click, Sub(sender As Object, e As EventArgs)
-                                                  NewGame()
-                                                  sender.Image = Image.FromFile("C:\Users\Administrator\source\repos\MineSweeper\Resources\smiley1.ico")
+
+                                                  NewGame(False)
+
                                               End Sub
 
 
-        NewGame()
+        NewGame(True)
 
 
 
     End Sub
 
-    Private Sub ComputerPlay(iStp As Integer)
-        Dim i = 0
-Play:   PlayOneStep()
-        i += 1
-        If i < iStp Then GoTo Play
+
+
+    Private Sub SweepSurrounding(pvt As Integer)
+
+        Dim srdgIdcs() = SurroundingIndices(pvt)
+
+        Dim fogged = 0
+        Dim discovered = 0
+        Dim safe = 0
+
+        Dim state(srdgIdcs.Count - 1) As String
+
+        For index = 0 To srdgIdcs.Count - 1
+            Dim srdgBtn As Button = Me.Controls.Item(srdgIdcs(index) + 1)
+            If srdgBtn.Text = "" And srdgBtn.Image Is Nothing Then
+                fogged += 1
+                state(index) = "fogged"
+            End If
+            If srdgBtn.Image IsNot Nothing Then
+                discovered += 1
+                state(index) = "discovered"
+            End If
+            If srdgBtn.Text <> "" Then
+                safe += 1
+                state(index) = "safe"
+            End If
+        Next
+
+
+        If fogged + discovered + safe <> srdgIdcs.Count Then MsgBox("something wrong")
+
+
+        'now compare
+        Dim pvtHint = aiHint(pvt)
+
+        If discovered > pvtHint Then MsgBox("something wrong 1")
+
+        If discovered = pvtHint Then
+            If fogged = 0 Then Exit Sub
+            If fogged > 0 Then
+                For index = 0 To srdgIdcs.Count - 1
+                    If state(index) = "fogged" Then Me.Controls.Item(srdgIdcs(index) + 1).Text = aiHint(srdgIdcs(index))
+                Next
+            End If
+        End If
+
+        If discovered < pvtHint Then
+            If discovered + fogged > pvtHint Then
+                Exit Sub    'still can work
+            End If
+            If discovered + fogged = pvtHint Then
+                For index = 0 To srdgIdcs.Count - 1
+                    If state(index) = "fogged" Then Me.Controls.Item(srdgIdcs(index) + 1).Text = aiHint(srdgIdcs(index))
+                Next
+            End If
+            If discovered + fogged < pvtHint Then MsgBox("something wrong 2")
+        End If
+
+
+        For Each si In srdgIdcs
+            If Me.Controls.Item(si).Text <> "" Then SweepSurrounding(si)
+        Next
+
+
     End Sub
 
 
-    Private Sub PlayOneStep()
-        'search from 0
-        '100 percent sure move
-        'one move
-        Dim i = 0
-Pivot:  If abClicked(i) = True Then
-            i += 1
-            GoTo Pivot
-        End If
-        If abClicked(i) = False Then
-            'if around eight has one revealed(clicked) as 1
-            'then pass
+    Private Sub NewGame(isInit As Boolean)
 
-            'if
-            'then pass
-            '...
+
+        If Not isInit Then
+
+
+            For Each hint In aiHint
+                hint = 0                      'clear the hints
+            Next
+
+
+            iDiscovered = 0
+
+
+            For index = 1 To iCR
+                Me.Controls.Item(index).Text = ""
+                DirectCast(Me.Controls.Item(index), Button).Image = Nothing
+            Next
+
+
+            DirectCast(Me.Controls.Item(0), PictureBox).Image = Image.FromFile(stPathSmiley)
+
+
         End If
-        'Dim btnPvt As Button = Me.Controls.Item(i + 1)
+
+
+        For count = 1 To Form1.iCount
+Random:     Dim t = Int(iCR * Rnd())               'place mines randomly
+            If aiHint(t) = -1 Then GoTo Random
+            aiHint(t) = -1
+        Next
+
+
+        For index = 0 To iCR - 1
+            If aiHint(index) = 0 Then       'for every not mine block
+                Dim count = 0
+                Dim srdg() = SurroundingIndices(index)
+                For Each srdgIndex In srdg
+                    If aiHint(srdgIndex) = -1 Then count += 1
+                Next
+                aiHint(index) = count       'update hint
+            End If
+        Next
+
+
 
     End Sub
 
-    Private Sub ShowAns(ii As Integer)
 
+    Private Function SurroundingIndices(i As Integer) As Integer()
 
-        Dim i = 0
-Mine:   If i <> ii And aiHint(i) = -1 Then
-            Dim btnShowing As Button = Me.Controls.Item(i + 1)
-            btnShowing.Image = Image.FromFile("C:\Users\Administrator\source\repos\MineSweeper\Resources\mine2.ico")
-        End If
-        i += 1
-        If i < iCR Then GoTo Mine
+        Dim srdgIdcs() As Integer = {}
 
+        If i - 1 >= 0 And i - 1 < iCR And i Mod iC <> 0 Then srdgIdcs.Append(i - 1)
+        If i + 1 >= 0 And i + 1 < iCR And i Mod iC <> iC - 1 Then srdgIdcs.Append(i + 1)
+        If i - iC >= 0 And i - iC < iCR And i \ iC <> 0 Then srdgIdcs.Append(i - iC)
+        If i + iC >= 0 And i + iC < iCR And i \ iC <> iR - 1 Then srdgIdcs.Append(i + iC)
+        If i - iC - 1 >= 0 And i - iC - 1 < iCR And i Mod iC <> 0 And i \ iC <> 0 Then srdgIdcs.Append(i - iC - 1)
+        If i + iC - 1 >= 0 And i + iC - 1 < iCR And i Mod iC <> 0 And i \ iC <> iR - 1 Then srdgIdcs.Append(i + iC - 1)
+        If i - iC + 1 >= 0 And i - iC + 1 < iCR And i Mod iC <> iC - 1 And i \ iC <> 0 Then srdgIdcs.Append(i - iC + 1)
+        If i + iC + 1 >= 0 And i + iC + 1 < iCR And i Mod iC <> iC - 1 And i \ iC <> iR - 1 Then srdgIdcs.Append(i + iC + 1)
 
-    End Sub
+        Return srdgIdcs
 
-    Private Sub NewGame()
-
-
-        Dim i = 0
-Clear:  aiHint(i) = 0
-        i += 1
-        If i < iCR Then GoTo Clear
-
-
-        i = 0
-Random: Dim iRdm = Int(iCR * Rnd())
-        If aiHint(iRdm) = -1 Then GoTo Random
-        If aiHint(iRdm) = 0 Then
-            aiHint(iRdm) = -1
-            i += 1
-            If i < Form1.iCount Then GoTo Random
-        End If
-
-
-        i = 0
-Hint:   If aiHint(i) = 0 Then
-            Dim iHint = 0
-            If i - 1 >= 0 And i - 1 < iCR And i Mod iC <> 0 Then If aiHint(i - 1) = -1 Then iHint += 1
-            If i + 1 >= 0 And i + 1 < iCR And i Mod iC <> iC - 1 Then If aiHint(i + 1) = -1 Then iHint += 1
-            If i - iC >= 0 And i - iC < iCR And i \ iC <> 0 Then If aiHint(i - iC) = -1 Then iHint += 1
-            If i + iC >= 0 And i + iC < iCR And i \ iC <> iR - 1 Then If aiHint(i + iC) = -1 Then iHint += 1
-            If i - iC - 1 >= 0 And i - iC - 1 < iCR And i Mod iC <> 0 And i \ iC <> 0 Then If aiHint(i - iC - 1) = -1 Then iHint += 1
-            If i + iC - 1 >= 0 And i + iC - 1 < iCR And i Mod iC <> 0 And i \ iC <> iR - 1 Then If aiHint(i + iC - 1) = -1 Then iHint += 1
-            If i - iC + 1 >= 0 And i - iC + 1 < iCR And i Mod iC <> iC - 1 And i \ iC <> 0 Then If aiHint(i - iC + 1) = -1 Then iHint += 1
-            If i + iC + 1 >= 0 And i + iC + 1 < iCR And i Mod iC <> iC - 1 And i \ iC <> iR - 1 Then If aiHint(i + iC + 1) = -1 Then iHint += 1
-            aiHint(i) = iHint
-        End If
-        i += 1
-        If i < iCR Then GoTo Hint
-
-
-        iClicked = 0
-
-
-        i = 0
-clear1: Me.Controls.Item(i + 1).Text = ""
-        DirectCast(Me.Controls.Item(i + 1), Button).Image = Nothing
-        i += 1
-        If i < iCR Then GoTo clear1
-
-
-        i = 0
-Clear2: abClicked(i) = False
-        i += 1
-        If i < iCR Then GoTo Clear2
-
-
-    End Sub
+    End Function
 
 
 End Class
