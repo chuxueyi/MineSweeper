@@ -1,5 +1,5 @@
 It starts from Form1
 
-3 written
+2 written
 
-Form1, Configure Game, and Game Board
+Form1  and Game Board
