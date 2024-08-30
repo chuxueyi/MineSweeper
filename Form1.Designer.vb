@@ -24,104 +24,128 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.btnPlay = New System.Windows.Forms.Button()
-        Me.mnSize = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnEasy = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnNotEasy = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnCfgSize = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnNum = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnNumSggsted = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnCfgNum = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnConfig = New System.Windows.Forms.MenuStrip()
-        Me.mnConfig.SuspendLayout()
+        Me.gbxMC = New System.Windows.Forms.GroupBox()
+        Me.txtNum = New System.Windows.Forms.TextBox()
+        Me.lblNum = New System.Windows.Forms.Label()
+        Me.gbxBS = New System.Windows.Forms.GroupBox()
+        Me.txtRow = New System.Windows.Forms.TextBox()
+        Me.lblRow = New System.Windows.Forms.Label()
+        Me.txtCol = New System.Windows.Forms.TextBox()
+        Me.lblCol = New System.Windows.Forms.Label()
+        Me.gbxMC.SuspendLayout()
+        Me.gbxBS.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnPlay
         '
-        Me.btnPlay.Location = New System.Drawing.Point(283, 173)
+        Me.btnPlay.Location = New System.Drawing.Point(273, 325)
         Me.btnPlay.Name = "btnPlay"
-        Me.btnPlay.Size = New System.Drawing.Size(234, 104)
+        Me.btnPlay.Size = New System.Drawing.Size(234, 71)
         Me.btnPlay.TabIndex = 1
         Me.btnPlay.Text = "Play"
         Me.btnPlay.UseVisualStyleBackColor = True
         '
-        'mnSize
+        'gbxMC
         '
-        Me.mnSize.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnEasy, Me.mnNotEasy, Me.mnCfgSize})
-        Me.mnSize.Name = "mnSize"
-        Me.mnSize.Size = New System.Drawing.Size(115, 20)
-        Me.mnSize.Text = "Choose board size"
+        Me.gbxMC.Controls.Add(Me.txtNum)
+        Me.gbxMC.Controls.Add(Me.lblNum)
+        Me.gbxMC.Location = New System.Drawing.Point(405, 28)
+        Me.gbxMC.Name = "gbxMC"
+        Me.gbxMC.Size = New System.Drawing.Size(227, 258)
+        Me.gbxMC.TabIndex = 3
+        Me.gbxMC.TabStop = False
+        Me.gbxMC.Text = "Mines count"
         '
-        'mnEasy
+        'txtNum
         '
-        Me.mnEasy.Name = "mnEasy"
-        Me.mnEasy.Size = New System.Drawing.Size(180, 22)
-        Me.mnEasy.Text = "Easy 10*10"
+        Me.txtNum.Location = New System.Drawing.Point(108, 119)
+        Me.txtNum.Name = "txtNum"
+        Me.txtNum.Size = New System.Drawing.Size(58, 21)
+        Me.txtNum.TabIndex = 4
+        Me.txtNum.Text = "33"
         '
-        'mnNotEasy
+        'lblNum
         '
-        Me.mnNotEasy.Name = "mnNotEasy"
-        Me.mnNotEasy.Size = New System.Drawing.Size(180, 22)
-        Me.mnNotEasy.Text = "Not Easy 20*20"
+        Me.lblNum.AutoSize = True
+        Me.lblNum.Location = New System.Drawing.Point(61, 125)
+        Me.lblNum.Name = "lblNum"
+        Me.lblNum.Size = New System.Drawing.Size(41, 12)
+        Me.lblNum.TabIndex = 3
+        Me.lblNum.Text = "Number"
         '
-        'mnCfgSize
+        'gbxBS
         '
-        Me.mnCfgSize.Name = "mnCfgSize"
-        Me.mnCfgSize.Size = New System.Drawing.Size(180, 22)
-        Me.mnCfgSize.Text = "Configure"
+        Me.gbxBS.Controls.Add(Me.txtRow)
+        Me.gbxBS.Controls.Add(Me.lblRow)
+        Me.gbxBS.Controls.Add(Me.txtCol)
+        Me.gbxBS.Controls.Add(Me.lblCol)
+        Me.gbxBS.Location = New System.Drawing.Point(148, 28)
+        Me.gbxBS.Name = "gbxBS"
+        Me.gbxBS.Size = New System.Drawing.Size(227, 258)
+        Me.gbxBS.TabIndex = 2
+        Me.gbxBS.TabStop = False
+        Me.gbxBS.Text = "Board size"
         '
-        'mnNum
+        'txtRow
         '
-        Me.mnNum.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnNumSggsted, Me.mnCfgNum})
-        Me.mnNum.Name = "mnNum"
-        Me.mnNum.Size = New System.Drawing.Size(136, 20)
-        Me.mnNum.Text = "Type in mines number"
+        Me.txtRow.Location = New System.Drawing.Point(111, 147)
+        Me.txtRow.Name = "txtRow"
+        Me.txtRow.Size = New System.Drawing.Size(58, 21)
+        Me.txtRow.TabIndex = 4
+        Me.txtRow.Text = "10"
         '
-        'mnNumSggsted
+        'lblRow
         '
-        Me.mnNumSggsted.Name = "mnNumSggsted"
-        Me.mnNumSggsted.Size = New System.Drawing.Size(233, 22)
-        Me.mnNumSggsted.Text = "Suggested - reduce in guesses"
+        Me.lblRow.AutoSize = True
+        Me.lblRow.Location = New System.Drawing.Point(76, 153)
+        Me.lblRow.Name = "lblRow"
+        Me.lblRow.Size = New System.Drawing.Size(29, 12)
+        Me.lblRow.TabIndex = 3
+        Me.lblRow.Text = "Rows"
         '
-        'mnCfgNum
+        'txtCol
         '
-        Me.mnCfgNum.Name = "mnCfgNum"
-        Me.mnCfgNum.Size = New System.Drawing.Size(233, 22)
-        Me.mnCfgNum.Text = "Configure"
+        Me.txtCol.Location = New System.Drawing.Point(111, 90)
+        Me.txtCol.Name = "txtCol"
+        Me.txtCol.Size = New System.Drawing.Size(58, 21)
+        Me.txtCol.TabIndex = 2
+        Me.txtCol.Text = "10"
         '
-        'mnConfig
+        'lblCol
         '
-        Me.mnConfig.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnSize, Me.mnNum})
-        Me.mnConfig.Location = New System.Drawing.Point(0, 0)
-        Me.mnConfig.Name = "mnConfig"
-        Me.mnConfig.Size = New System.Drawing.Size(800, 24)
-        Me.mnConfig.TabIndex = 0
-        Me.mnConfig.Text = "MenuStrip1"
+        Me.lblCol.AutoSize = True
+        Me.lblCol.Location = New System.Drawing.Point(58, 93)
+        Me.lblCol.Name = "lblCol"
+        Me.lblCol.Size = New System.Drawing.Size(47, 12)
+        Me.lblCol.TabIndex = 0
+        Me.lblCol.Text = "Columns"
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.gbxMC)
+        Me.Controls.Add(Me.gbxBS)
         Me.Controls.Add(Me.btnPlay)
-        Me.Controls.Add(Me.mnConfig)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MainMenuStrip = Me.mnConfig
         Me.Name = "Form1"
         Me.Text = "MineSweeper"
         Me.TopMost = True
-        Me.mnConfig.ResumeLayout(False)
-        Me.mnConfig.PerformLayout()
+        Me.gbxMC.ResumeLayout(False)
+        Me.gbxMC.PerformLayout()
+        Me.gbxBS.ResumeLayout(False)
+        Me.gbxBS.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents btnPlay As Button
-    Friend WithEvents mnSize As ToolStripMenuItem
-    Friend WithEvents mnEasy As ToolStripMenuItem
-    Friend WithEvents mnNotEasy As ToolStripMenuItem
-    Friend WithEvents mnCfgSize As ToolStripMenuItem
-    Friend WithEvents mnNum As ToolStripMenuItem
-    Friend WithEvents mnNumSggsted As ToolStripMenuItem
-    Friend WithEvents mnCfgNum As ToolStripMenuItem
-    Friend WithEvents mnConfig As MenuStrip
+    Friend WithEvents gbxMC As GroupBox
+    Friend WithEvents txtNum As TextBox
+    Friend WithEvents lblNum As Label
+    Friend WithEvents gbxBS As GroupBox
+    Friend WithEvents txtRow As TextBox
+    Friend WithEvents lblRow As Label
+    Friend WithEvents txtCol As TextBox
+    Friend WithEvents lblCol As Label
 End Class
