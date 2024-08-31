@@ -2,8 +2,6 @@
 
     'gaming
     Dim stPathSmiley = "C:\Users\Administrator\source\repos\MineSweeper\Resources\smiley1.ico"
-    'winning
-    Dim stPathFeelingGood = "C:\Users\Administrator\source\repos\MineSweeper\Resources\smiley.ico"
     'losing
     Dim stPathNotHappy = "C:\Users\Administrator\source\repos\MineSweeper\Resources\smiley3.ico"
     Dim stPathExploded = "C:\Users\Administrator\source\repos\MineSweeper\Resources\mine4.ico"
@@ -18,15 +16,11 @@
     'hidden answer board
     Dim aiHint(iCR - 1) As Integer     'last index in parenthesis
 
-    'mine probability from player's point of view
-    Dim aiProb(iCR - 1) As Integer
-
     'every surrounding-buttons-indices for every button
     Dim aprSrdg(iCR - 1) As (Integer, Integer())
 
-    '
-    'winning
-    '
+    'swept area
+    Dim abSwept(iCR - 1) As Boolean
 
 
     'load the game board according to designated sizes
@@ -74,9 +68,16 @@ Board:  Me.Controls.Add(New Button With {
                                                                If aiHint(pvt) <> -1 Then
 
                                                                    sender.Text = aiHint(pvt)
-                                                                   aiProb(pvt) = 0
 
-                                                                   UpdateProb(pvt)
+                                                                   abSwept(pvt) = True
+
+                                                                   FastSweep(pvt)
+
+                                                                   MarkMines()
+
+                                                                   CheckWinning()
+
+                                                                   AutoSweep()
 
                                                                End If
 
@@ -88,22 +89,48 @@ Board:  Me.Controls.Add(New Button With {
         Next
 
 
-        AddHandler Me.Controls.Item(0).Click, AddressOf NewGame
-
-
         NewGame()
 
 
     End Sub
 
+    Private Sub AutoSweep()
+        'Throw New NotImplementedException()
+    End Sub
+
+    Private Sub CheckWinning()
+        Dim count = 0
+        For index = 1 To iCR
+            If Me.Controls.Item(index).text = "*" Then
+                count += 1
+                If count = Form1.iMines Then
+                    MsgBox("win")
+                    Me.Close()
+                End If
+            End If
+        Next
+    End Sub
+
+    Private Sub FastSweep(pvt As Integer)
+        If aiHint(pvt) = 0 Then
+            For Each pp In aprSrdg(pvt).Item2
+                If Not abSwept(pp) Then
+                    Me.Controls.Item(pp + 1).Text = aiHint(pp)
+                    abSwept(pp) = True
+                    FastSweep(pp)
+                End If
+            Next
+        End If
+    End Sub
+
     Private Sub NewGame()
 
-        aiHint.Initialize()
+        For Each h In aiHint : h = 0 : Next
 
+        For Each s In abSwept : s = False : Next
 
         For index = 1 To iCR
-            aiProb(index - 1) = 100
-            Me.Controls.Item(index).Text = aiProb(index - 1) & "%"
+            Me.Controls.Item(index).Text = ""
             Me.Controls.Item(index).Image = Nothing
             aprSrdg(index - 1) = (index - 1, SurroundingIndices(index - 1))
         Next
@@ -139,31 +166,24 @@ Random:     Dim t = Int(iCR * Rnd())
 
     End Sub
 
-    Private Sub UpdateProb(startIndex As Integer)
+    Private Sub MarkMines()
 
-        If aiHint(startIndex) = 0 Then
-            For Each si In aprSrdg(startIndex).Item2
-                Me.Controls.Item(si + 1).Text = aiHint(si)
-                aiProb(si) = 0
-            Next
-        End If
-        If aiHint(startIndex) <> 0 Then
-            Dim count = 0
-            For Each si As Integer In aprSrdg(startIndex).Item2
-                If aiProb(si) <> 0 Then count += 1
-            Next
-            If count <> 0 Then
-                For Each si As Integer In aprSrdg(startIndex).Item2
-                    If aiProb(si) <> 0 Then
-                        aiProb(si) = aiHint(startIndex) * 100 \ count
-                        Me.Controls.Item(si).Text = aiProb(si) & "%"
-                    End If
-
+        For index = 0 To iCR - 1
+            If abSwept(index) Then
+                Dim ii() = aprSrdg(index).Item2
+                Dim count = 0
+                For Each eii In ii
+                    If Not abSwept(eii) Then count += 1
                 Next
+                If aiHint(index) = count Then
+                    For Each eii In ii
+                        If Not abSwept(eii) Then
+                            Me.Controls.Item(eii + 1).Text = "*"   'swept is still false
+                        End If
+                    Next
+                End If
             End If
-
-        End If
-
+        Next
 
     End Sub
 

@@ -62,7 +62,7 @@ Partial Class Form1
         Me.txtNum.Name = "txtNum"
         Me.txtNum.Size = New System.Drawing.Size(58, 21)
         Me.txtNum.TabIndex = 4
-        Me.txtNum.Text = "33"
+        Me.txtNum.Text = "15"
         '
         'lblNum
         '
